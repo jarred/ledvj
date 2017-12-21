@@ -10,7 +10,8 @@ export default class Clock extends Component {
 
   setScene(scene) {
     const newScene = scene % this.props.children.length
-    this.setState({sceneIndex: newScene})
+    const event = () => this.setState({sceneIndex: newScene})
+    this.props.queueEvent(event)
   }
 
   handleKeyDown(event) {
