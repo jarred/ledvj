@@ -1,4 +1,23 @@
 * {
   font-family: Sans-Serif;
+  margin: 0;
+  padding: 0;
 }
 
+.App {
+  width: 128px;
+  height: 128px;
+  background-color: #000;
+}
+
+.Scene-frame {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  &.is-active {
+    opacity: 1;
+  }
+}
