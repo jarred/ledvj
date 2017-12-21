@@ -48,5 +48,6 @@ export default class Scene extends Component {
     if (!this.props.visible) {
       return null;
     }
+    return <div className="Scene">{this.props.children}</div>;
   }
 }
