@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BpmCtrl from "./components/BpmCtrl";
 import Scene from "./components/Scene";
+import Clock from "./components/Clock"
 
 class App extends Component {
   constructor(props) {
@@ -64,7 +65,12 @@ class App extends Component {
           visible={this.state.bpmCtrlVisible}
           bpm={this.state.bpm}
         />
-        <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+        <Clock bpm={this.state.bpm}>
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+        </Clock>
       </div>
     );
   }
