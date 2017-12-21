@@ -3,6 +3,7 @@ import BpmCtrl from "./components/BpmCtrl";
 import Scene from "./components/Scene";
 import Clock from "./components/Clock";
 import Gradient from "./components/Gradient";
+import GifPlayer from "./components/GifPlayer";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends Component {
     this.updateBpm = this.updateBpm.bind(this);
     this.queueEvent = this.queueEvent.bind(this);
     this.jiveToBeat = this.jiveToBeat.bind(this);
-    this.queuedEvents = []
+    this.queuedEvents = [];
   }
 
   keyDown(event) {
@@ -36,15 +37,15 @@ class App extends Component {
       bpmCtrlVisible: false,
       bpm: bpm
     });
-    this.setPulse(bpm)
+    this.setPulse(bpm);
   }
 
   jiveToBeat() {
     if (this.queuedEvents.length > 0) {
-      const events = this.queuedEvents
-      const event = events[0]
-      event()
-      this.queuedEvents = events.slice(1)
+      const events = this.queuedEvents;
+      const event = events[0];
+      event();
+      this.queuedEvents = events.slice(1);
     }
   }
 
@@ -54,18 +55,14 @@ class App extends Component {
     }
     const bps = bpm / 60;
     const miliBpm = 1000 / bps;
-    const interval = setInterval(
-      this.jiveToBeat,
-      miliBpm,
-      bpm
-    );
-    this.setState({interval})
+    const interval = setInterval(this.jiveToBeat, miliBpm, bpm);
+    this.setState({ interval });
   }
 
   queueEvent(event) {
-    const events = this.queuedEvents
-    events.push(event)
-    this.queuedEvents = events
+    const events = this.queuedEvents;
+    events.push(event);
+    this.queuedEvents = events;
   }
 
   componentDidMount() {
@@ -83,13 +80,21 @@ class App extends Component {
         />
         <Clock bpm={this.state.bpm} queueEvent={this.queueEvent}>
           <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
-            <Gradient />
+            <GifPlayer
+              src="https://media.giphy.com/media/5ocPFnJ5jXYQ/giphy.gif"
+              bpm={this.state.bpm}
+              clip-length={10}
+            />
           </Scene>
           <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
             <Gradient />
           </Scene>
           <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
-            <Gradient />
+            <GifPlayer
+              src="https://media.giphy.com/media/K9C6PifNxh9Qs/giphy.gif"
+              bpm={this.state.bpm}
+              clip-length={10}
+            />
           </Scene>
           <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
             <Gradient />
