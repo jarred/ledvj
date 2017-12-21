@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import BpmCtrl from "./components/BpmCtrl";
 import Scene from "./components/Scene";
-import Clock from "./components/Clock"
+import Clock from "./components/Clock";
+import Gradient from "./components/Gradient";
 
 class App extends Component {
   constructor(props) {
@@ -66,10 +67,18 @@ class App extends Component {
           bpm={this.state.bpm}
         />
         <Clock bpm={this.state.bpm}>
-          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
-          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
-          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
-          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible} />
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
+            <Gradient />
+          </Scene>
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
+            <Gradient />
+          </Scene>
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
+            <Gradient />
+          </Scene>
+          <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
+            <Gradient />
+          </Scene>
         </Clock>
       </div>
     );

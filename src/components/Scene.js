@@ -48,22 +48,6 @@ export default class Scene extends Component {
     if (!this.props.visible) {
       return null;
     }
-    return (
-      <div className="Scene">
-        {this.state.frames.map((frame, index) => {
-          console.log("index", index);
-          console.log("state", this.state.currentFrameIndex);
-          return (
-            <div
-              className={ClassNames("Scene-frame", {
-                "is-active": index === this.state.currentFrameIndex
-              })}
-              style={{ backgroundColor: frame }}
-              key={index}
-            />
-          );
-        })}
-      </div>
-    );
+    return <div className="Scene">{this.props.children}</div>;
   }
 }
