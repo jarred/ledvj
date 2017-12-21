@@ -4,13 +4,14 @@ export default class Clock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scene: 0
+      sceneIndex: 0
     }
   }
 
   setScene(scene) {
     const newScene = scene % this.props.children.length
-    this.setState({scene: newScene})
+    const event = () => this.setState({sceneIndex: newScene})
+    this.props.queueEvent(event)
   }
 
   handleKeyDown(event) {
@@ -34,6 +35,6 @@ export default class Clock extends Component {
   }
 
   render() {
-    return <div>{this.props.children[this.state.scene]}</div>
+    return <div>{this.props.children[this.state.sceneIndex]}</div>
   }
 }

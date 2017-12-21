@@ -10,10 +10,14 @@ class App extends Component {
     this.state = {
       bpm: 120,
       bpmCtrlVisible: false,
-      beat: null
+      beat: null,
+      interval: undefined
     };
     this.keyDown = this.keyDown.bind(this);
     this.updateBpm = this.updateBpm.bind(this);
+    this.queueEvent = this.queueEvent.bind(this);
+    this.jiveToBeat = this.jiveToBeat.bind(this);
+    this.queuedEvents = []
   }
 
   keyDown(event) {
@@ -27,35 +31,46 @@ class App extends Component {
     }
   }
 
-  updateBpm(val) {
+  updateBpm(bpm) {
     this.setState({
       bpmCtrlVisible: false,
-      bpm: val
+      bpm: bpm
     });
+    this.setPulse(bpm)
   }
 
-  setPulse() {
-    if (this.int) {
-      clearInterval(this.int);
+  jiveToBeat() {
+    if (this.queuedEvents.length > 0) {
+      const events = this.queuedEvents
+      const event = events[0]
+      event()
+      this.queuedEvents = events.slice(1)
     }
-    const bps = this.state.bpm / 60;
-    const miliBpm = 1000 / bps;
-    this.int = setInterval(
-      () => {
-        // console.log("doof");
-      },
-      miliBpm,
-      this.state.bpm
-    );
   }
 
-  componentDidUpdate() {
-    this.setPulse();
+  setPulse(bpm) {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
+    const bps = bpm / 60;
+    const miliBpm = 1000 / bps;
+    const interval = setInterval(
+      this.jiveToBeat,
+      miliBpm,
+      bpm
+    );
+    this.setState({interval})
+  }
+
+  queueEvent(event) {
+    const events = this.queuedEvents
+    events.push(event)
+    this.queuedEvents = events
   }
 
   componentDidMount() {
     document.body.addEventListener("keydown", this.keyDown);
-    this.setPulse();
+    this.setPulse(this.state.bpm);
   }
 
   render() {
@@ -66,7 +81,7 @@ class App extends Component {
           visible={this.state.bpmCtrlVisible}
           bpm={this.state.bpm}
         />
-        <Clock bpm={this.state.bpm}>
+        <Clock bpm={this.state.bpm} queueEvent={this.queueEvent}>
           <Scene bpm={this.state.bpm} visible={!this.state.bpmCtrlVisible}>
             <Gradient />
           </Scene>
